@@ -1,8 +1,48 @@
-Things to do (Things that are not done yet)
+# Things to do (Things that are not done yet)
 
 * special variables ($1,$2..)
 * super in aliased methods
 
-Things to improve (Done but things to fix)
+# Things to improve (Done but things to fix)
 
 * Make additions as they are noticed.
+
+# How to Implement "Build by (g)make"
+
+ここからはとりあえず日本語で。
+
+## makeによるビルドを実現するステップ。
+
+[x] makeでmrbcを作れるようにする(mrbcターゲット) 
+[x] minimalターゲットを作れるようにする(mrblib,mrbgemなし)
+[ ] minimalターゲットを作れるようにする(mrbgemなし)
+[ ] mrbgemのダウンロードビルド
+[ ] クロスコンパイル
+[ ] テスト(mrbgemも含めて)
+[ ] コンパイル時シンボル処理
+
+## makeでの基本的ビルド(できているところ)
+
+targetの下に`xxxx.mk`ファイルを作る。基本的に minimal.mk をベースに改造
+
+gccでビルドする場合`include $(ROOT_DIR)/tasks/gcc.mk`を先頭に。今後 clang.mk なども用意する予定
+
+## mrblib
+
+`mrbc −C`でCに変換、コンパイル、libmruby.aに追加、mrubyにリンク
+
+## mrbgems
+
+これが難題。最初はGEMS変数に必要なgem名を「core:mruby-eval」とか「github:mattn/mruby-iconv」とかの形式で列挙しようと考えたけど、dependencyで困る。各gemの mrbgem.rake がRubyで書いてあるので、Rubyから離れられない。JSONとかYAMLとかに移行することも考えたが、互換性がなくなるのも嬉しくない。
+
+## クロスコンパイル
+
+mrbcをビルドする処理が分離されればもっと簡単になるはず。
+
+## テスト
+
+現在のmruby-test gemに依存するやり方は捨てて、テストそのものをMakefileターゲットにする方式に戻す
+
+## コンパイル時シンボル処理
+
+Cソースコードのコンパイル前に、ソースコードをスキャンして、シンボルを特定のファイルに書き出す。.hではenumを、.cではenum値と文字列のペアの構造体配列を定義する。そのファイルをリンクすれば、シンボルのROM化ができる。micropython方式を参照のこと
