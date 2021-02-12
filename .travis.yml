@@ -8,12 +8,6 @@ env:
   - MRUBY_CONFIG=travis_config.rb
 script: "rake -m && rake test"
 
-before_deploy:
-  - git config --local user.name "Reckordp"
-  - git config --local user.email "rmuhammad134@gmail.com"
-  - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
-  - git tag $TRAVIS_TAG
-
 deploy:
   provider: releases
   token: ${token}
