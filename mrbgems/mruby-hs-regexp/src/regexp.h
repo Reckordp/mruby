@@ -29,3 +29,7 @@ extern regexp *regcomp(regexp_info *ri, const char *re);
 extern int regexec(regexp_info *ri, regexp *rp, const char *s);
 extern void regsub(regexp_info *ri, const regexp *rp, const char *src, char *dst);
 extern void regerror(regexp_info *ri, char *message);
+
+#define ARGS_ANY() MRB_ARGS_ANY()
+#define ARGS_REQ(x) MRB_ARGS_REQ(x)
+#define ARGS_NONE() MRB_ARGS_NONE() 

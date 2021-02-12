@@ -9,4 +9,11 @@ MRuby::Build.new do |conf|
   end
 
   conf.gem 'mrbgems/mruby-at_exit'
+  conf.gem 'mrbgems/mruby-hs-regexp'
+  conf.gem 'mrbgems/mruby-dir'
+  conf.gem 'mrbgems/mruby-errno'
+  conf.gem 'mrbgems/mruby-file-stat'
+  conf.gem 'mrbgems/mruby-process'
+  conf.gem 'mrbgems/mruby-pack'
+  conf.gem 'mrbgems/mruby-dir-glob'
 end
