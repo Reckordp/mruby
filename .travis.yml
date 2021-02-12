@@ -16,8 +16,7 @@ before_deploy:
 
 deploy:
   provider: releases
-  token: 54467d4acc07050b8048c67d02e8e4faf30a148d
-  file: build/host/lib/libmruby.a
-  skip_cleanup: true
+  token: ${token}
+  file: "build/host/lib/libmruby.a"
   on:
     tags: true
