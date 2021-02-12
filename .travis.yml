@@ -12,5 +12,6 @@ deploy:
   provider: releases
   token: ${token}
   file: "build/host/lib/libmruby.a"
+  skip_cleanup: true
   on:
     tags: true
