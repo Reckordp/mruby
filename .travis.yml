@@ -6,9 +6,23 @@ matrix:
   include:
     - os: linux
       sudo: false
-    - os: osx
-      osx_image: xcode7.1
+      dist: bionic
+      arch: amd64
 
 env:
   - MRUBY_CONFIG=travis_config.rb
 script: "rake -m && rake test"
+
+before_deploy:
+  - git config --local user.name "Reckordp"
+  - git config --local user.email "rmuhammad134@gmail.com"
+  - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
+  - git tag $TRAVIS_TAG
+
+deploy:
+  provider: releases
+  api_key: 54467d4acc07050b8048c67d02e8e4faf30a148d
+  file: build/host/lib/libmruby.a
+  skip_cleanup: true
+  on:
+    tags: true
