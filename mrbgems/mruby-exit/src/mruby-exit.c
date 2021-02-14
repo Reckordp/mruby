@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <mruby.h>
 
+void mrb_mruby_at_exit_gem_final(mrb_state*);
+
 static mrb_value
 f_exit(mrb_state *mrb, mrb_value self)
 {
@@ -11,6 +13,7 @@ f_exit(mrb_state *mrb, mrb_value self)
   istatus = mrb_true_p(status) ? EXIT_SUCCESS :
             mrb_false_p(status) ? EXIT_FAILURE :
             (int)mrb_int(mrb, status);
+  mrb_mruby_at_exit_gem_final(mrb);
   exit(istatus);
 
   /* not reached */
